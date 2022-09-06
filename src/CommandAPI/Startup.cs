@@ -27,9 +27,10 @@ namespace CommandAPI
         {
             services.AddDbContext<CommandContext>(options =>
             {
-                options.UseNpgsql(Configuration["PostgreSqlConnection"]);
+                options.UseNpgsql(Configuration.GetConnectionString("PostgreSqlConnection"));
             });
             services.AddControllers();
+            services.AddScoped<ICommandAPIRepo, SqlCommandAPIRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CommandAPI\CommandAPI.csproj" />
+    <ProjectReference Include="..\..\src\CommandAPI\CommandAPI.csproj" />
   </ItemGroup>
 
 </Project>
