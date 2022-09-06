@@ -28,13 +28,22 @@ namespace CommandAPI.Controllers
             var commands = _repository.GetAllCommands();
             return Ok(_mapper.Map<IEnumerable<CommandReadDto>>(commands));
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetCommandById")]
         public ActionResult<IEnumerable<CommandReadDto>> GetCommandById(int id)
         {
             var command = _repository.GetCommandById(id);
             if(command == null)
                 return NotFound();
             return Ok(_mapper.Map<CommandReadDto>(command));
+        }
+        [HttpPost]
+        public ActionResult<CommandReadDto> CreateCommand(CommandCreateDto commandCreateDto)
+        {
+            var commandModel = _mapper.Map<Command>(commandCreateDto);
+            _repository.CreateCommand(commandModel);
+            _repository.SaveChanges();
+            var commandreadDto = _mapper.Map<Command, CommandReadDto>(commandModel);
+            return CreatedAtRoute(nameof(GetCommandById), new { Id = commandreadDto.Id }, commandreadDto);
         }
     }
 }
