@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Npgsql;
 using AutoMapper;
 using System;
+using Newtonsoft.Json.Serialization;
 
 namespace CommandAPI
 {
@@ -30,6 +31,7 @@ namespace CommandAPI
             {
                 options.UseNpgsql(builder.ConnectionString);
             });
+            services.AddControllers().AddNewtonsoftJson(s => { s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); });
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<ICommandAPIRepo, SqlCommandAPIRepo>();
